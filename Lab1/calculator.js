@@ -1,102 +1,50 @@
-var myNum = 0
-var lastOperator = ''
+
 $(document).ready(function () {
-    // numbers
-    $('.numCls').click(function (event) {
-        console.log(this.id);
-        $('.inputField').text($('.inputField').text() + this.id)
-    });
+  // numbers
+  $(".numCls").click(function (event) {
+    console.log(this.id);
+    $(".inputField").text($(".inputField").text() + this.id);
+  });
 
-    // +
-    $('#plus').click(function (event) {
-        operatorPressed('+')
+  // +
+  $("#plus").click(function (event) {
+    $(".inputField").text($(".inputField").text() + '+');
 
-    });
+  });
 
-    // -
-    $('#minus').click(function (event) {
-        operatorPressed('-')
+  // -
+  $("#minus").click(function (event) {
+    $(".inputField").text($(".inputField").text() + '-');
+  });
 
+  // *
+  $("#multiply").click(function (event) {
+    $(".inputField").text($(".inputField").text() + '*');
+  });
 
-    });
+  // /
+  $("#divide").click(function (event) {
+    $(".inputField").text($(".inputField").text() + '/');
+  });
 
-    // *
-    $('#multiply').click(function (event) {
-        operatorPressed('*')
+  // ←
+  $("#back").click(function (event) {
+    var str = $(".inputField").text();
+    str = str.substring(0, str.length - 1);
+    $(".inputField").text(str);
+  });
 
-
-    });
-
-
-    // /
-    $('#divide').click(function (event) {
-        operatorPressed('/')
-
-
-    });
-
-
-    // ←
-    $('#back').click(function (event) {
-        var str = $('.inputField').text()
-        str = str.substring(0, str.length - 1);
-        $('.inputField').text(str)
-
-    });
-
-    // =
-    $('#equal').click(function (event) {
-        $('.inputField').text(myNum)
-    });
-
-
-    // clear
-    $('#clear').click(function (event) {
-
-        myNum = 0
-        lastOperator = ''
-        $('.inputField').text('')
-    });
-
-
-    $('.inputField').text('')
-
-
-
+  // =
+  $("#equal").click(function (event) {
+    $(".inputField").text(eval($(".inputField").text()));
 });
 
+  // clear
+  $("#clear").click(function (event) {
 
-function operatorPressed(name) {
-    var curr = $('.inputField').text()
-    if (lastOperator === '') {
-        myNum = parseFloat(curr)
-    } else {
-        switch (lastOperator) {
-            case '+':
-                myNum += parseFloat(curr)
-                break;
-            case '-':
-                myNum -= parseFloat(curr)
-                break;
-            case '*':
-                myNum *= parseFloat(curr)
-                break;
-            case '/':
-                myNum /= parseFloat(curr)
-                break;
+    $(".inputField").text("");
+  });
 
-            default:
-                break;
-        }
-        lastOperator = name
-
-
-    }
-    lastOperator = name
-    console.log(myNum);
-
-
-    $('.inputField').text('')
-
-}
+  $(".inputField").text("");
+});
 
