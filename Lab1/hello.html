@@ -4,8 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <link rel="stylesheet" href="helloStyles.css" />
+    <script src="calculator.js"></script>
   </head>
   <body>
     <div id="myCalculator">
@@ -14,32 +16,32 @@
 
         <div class="rows">
           <div class="row">
-            <div class="myButton">1</div>
-            <div class="myButton">2</div>
-            <div class="myButton">3</div>
-            <div class="myButton">4</div>
-            <div class="myButton">5</div>
+            <div id="1" class="myButton numCls">1</div>
+            <div id="2" class="myButton numCls">2</div>
+            <div id="3" class="myButton numCls">3</div>
+            <div id="4" class="myButton numCls">4</div>
+            <div id="5" class="myButton numCls">5</div>
           </div>
 
           <div class="row">
-            <div class="myButton">6</div>
-            <div class="myButton">7</div>
-            <div class="myButton">8</div>
-            <div class="myButton">9</div>
-            <div class="myButton">0</div>
+            <div id="6" class="myButton numCls">6</div>
+            <div id="7" class="myButton numCls">7</div>
+            <div id="8" class="myButton numCls">8</div>
+            <div id="9" class="myButton numCls">9</div>
+            <div id="0" class="myButton numCls">0</div>
           </div>
 
           <div class="row">
-            <div class="myButton">+</div>
-            <div class="myButton">-</div>
-            <div class="myButton">*</div>
-            <div class="myButton">/</div>
-            <div class="myButton">←</div>
+            <div id="plus" class="myButton">+</div>
+            <div id="minus" class="myButton">-</div>
+            <div id="multiply" class="myButton">*</div>
+            <div id="divide" class="myButton">/</div>
+            <div id="back" class="myButton">←</div>
           </div>
 
           <div class="row">
-            <div class="myButton">*</div>
-            <div class="myButton">clear</div>
+            <div id="equal" class="myButton">=</div>
+            <div id="clear" class="myButton">clear</div>
           </div>
         </div>
       </div>
