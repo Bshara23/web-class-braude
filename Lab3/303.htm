@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    <title>ניהול רשימת הסטודנטים</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+    <style>
+        h1 {
+            text-align: right;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+    </style>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="inc/jquery-3.0.0.min.js"></script>
+    <script>
+        let list = [
+            { name: "מיכאל", surname: "כהן", age: 22 },
+            { name: "אנה", surname: "גלמן", age: 24 },
+            { name: "ליאת", surname: "חדאד", age: 27 }
+        ];
+
+        $(document).ready(function () {
+
+            list.map((x) => console.table(x));
+
+
+            createList();
+
+            $("#selStudents").change(function () {
+                var n = parseInt($(this).find("option:selected").val());
+                selectItem(n);
+            })
+        })
+
+        function selectItem(n) {
+            if (n > -1) {
+                var student = list[n];
+                $("#name").val(student.name);
+                $("#surname").val(student.surname);
+                $("#age").val(student.age);
+            } else {
+                $("#name").val('');
+                $("#surname").val('');
+                $("#age").val('');
+            }
+        }
+
+        function createList() {
+            $("#selStudents").empty();
+            $.each(list, function (i, o) {
+                var opt = $("<option/>");
+                $(opt).val(i);
+                $(opt).text(o["name"] + " " + o["surname"]);
+                $("#selStudents").append(opt);
+            })
+            selectItem(-1);
+        }
+
+        function saveItem() {
+            var n = parseInt($("#selStudents").find("option:selected").val());
+            console.log(list[n]);
+            list[n].name = $("#name").val();
+            list[n].surname = $("#surname").val();
+            list[n].age = $("#age").val();
+
+            $("#selStudents").find("option:selected").text(list[n].name + " " + list[n].surname);
+            console.log(list[n]);
+        }
+
+    </script>
+</head>
+<body>
+    <div style="width:500px;margin:20px auto;">
+        <h1>ניהול רשימת הסטודנטים</h1>
+        <hr />
+        <div>
+            <div style="float:right;width:40%">
+                <select id="selStudents" multiple="" class="form-control" style="height:134px"></select>
+            </div>
+            <div style="float:right;width:60%">
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label">שם</label>
+                    <div class="col-sm-7">
+                        <input id="name" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label">שם משפחה</label>
+                    <div class="col-sm-7">
+                        <input id="surname" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-5 col-form-label">גיל</label>
+                    <div class="col-sm-7">
+                        <input type="number" id="age" class="form-control" />
+                    </div>
+                </div>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+        <hr />
+        <button class="btn btn-success" onclick="saveItem()">שמירה</button>
+        <button class="btn btn-danger" onclick="createList()">איתחול</button>
+    </div>
+</body>
+</html>

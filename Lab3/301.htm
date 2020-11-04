@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>JSON examples</title>
+    <style>
+        label {
+            display: inline-block;
+            width: 100px;
+        }
+
+        #selctedData span {
+            font-weight: bold;
+        }
+    </style>
+    <script src="inc/jquery-3.0.0.min.js"></script>
+    <script>
+        var example1 = '{ "students" : [' +
+            '{ "First Name":"David" , "Last Name":"Berman", "Age":18 },' +
+            '{ "First Name":"Anna" , "Last Name":"Smith", "Age":27 },' +
+            '{ "First Name":"Peter" , "Last Name":"Jones", "Age":23 } ]}';
+        var obj = JSON.parse(example1);
+
+        // alternative
+        var example2 = {
+            "students": [
+                { "First Name": "David", "Last Name": "Berman", "Age": 18 },
+                { "First Name": "Anna", "Last Name": "Smith", "Age": 27 },
+                { "First Name": "Peter", "Last Name": "Jones", "Age": 23 }
+            ]
+        }
+
+        $(document).ready(function () {
+
+            console.log(obj);
+            $.each(obj["students"], function (i, o) {
+                var opt = $("<option/>");
+                $(opt).val(i);
+                $(opt).text(o["First Name"] + " " + o["Last Name"]);
+                $("#selStudents").append(opt);
+            })
+
+            $("#selStudents").change(function () {
+                var n = parseInt($(this).find("option:selected").val());
+                var student = obj["students"][n];
+                var s = "";
+                for (var propertyName in student) {
+                    s += "<div><label>" + propertyName + "</label><span>" + student[propertyName] + "</span></div>";
+                }
+                $("#selctedData").html(s);
+            })
+        })
+    </script>
+</head>
+<body>
+    <div id="" style="width:400px;margin:30px auto">
+        <div style="float:left">
+            <select id="selStudents" multiple></select>
+        </div>
+        <div style="float:left;margin-left:20px;" id="selctedData">
+            select student ..
+        </div>
+        <div style="clear:both"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lab 3</title>
+    <style>
+      label {
+        display: inline-block;
+        width: 100px;
+      }
+
+      #selctedData span {
+        font-weight: bold;
+      }
+    </style>
+    <script src="inc/jquery-3.0.0.min.js"></script>
+    <script>
+      var list = [
+        { fname: "מיכאל", lname: "כהן", age: 22, field: "תוכנה" },
+        { fname: "אנה", lname: "גלמן", age: 24, field: "חשמל" },
+        { fname: "ליאת", lname: "חדאד", age: 27, field: "מכונות" },
+      ];
+
+      fieldMapper = [
+        { fname: "שפ פרטי" },
+        { lname: "שם משפחה" },
+        { age: "גיל" },
+        { field: "תחום" },
+      ];
+
+      // returns the corresponding field name in hebrew
+      function getFieldName(fieldName) {
+        var keys = new Array();
+        for (let i = 0; i < fieldMapper.length; i++) {
+          const f = fieldMapper[i];
+          keys.push(Object.keys(f)[0]);
+        }
+        for (var i in fieldMapper) {
+          if (fieldName === keys[i]) {
+            return fieldMapper[i][keys[i]];
+          }
+        }
+      }
+      //var obj = JSON.parse(example1);
+
+      function initialization() {
+        var myList = localStorage.getItem("students");
+        myList = JSON.parse(myList);
+
+        // if list already exist then set it
+        if (myList !== null) {
+          console.log("students has been fetched from local storage");
+          list = myList;
+        }
+        // otherwise use the predifined list
+        else {
+          console.log("students doesn't exist in local storage");
+          // meaning do nothing
+        }
+      }
+
+      $(document).ready(function () {
+        initialization();
+        console.log("list", list);
+        $.each(list, function (i, o) {
+          console.log("dw", i, o);
+          var opt = $("<option/>");
+          $(opt).val(i);
+          $(opt).text(o["fname"] + " " + o["lname"]);
+          $("#selStudents").append(opt);
+        });
+
+        $("#selStudents").change(function () {
+          var n = parseInt($(this).find("option:selected").val());
+          var student = list[n];
+          var s = "";
+          for (var propertyName in student) {
+            s +=
+              "<div><input id=" +
+              propertyName +
+              " value=" +
+              student[propertyName] +
+              "></input><label>" +
+              //propertyName +
+              getFieldName(propertyName) +
+              "</label></div>";
+          }
+          $("#selctedData").html(s);
+        });
+      });
+
+      function rerender() {
+        location.reload();
+      }
+
+      // clears out the inputs of the select student
+      function onInit() {
+        var n = parseInt($($("#selStudents")).find("option:selected").val());
+        if (!isNaN(n)) {
+          var student = list[n];
+          for (var propertyName in student) {
+            // clear out the text in the input
+            const val = $("#" + propertyName).val("");
+          }
+        }
+      }
+
+      function onAdd() {
+        var n = parseInt($($("#selStudents")).find("option:selected").val());
+        if (!isNaN(n)) {
+          var student = Object.assign({}, list[n]); // hard copy
+
+          for (var propertyName in student) {
+            // get value of field from the relevant input
+            const val = $("#" + propertyName).val();
+            // make changes to the new student
+            student[propertyName] = val;
+          }
+          list.push(student);
+          // save in local storage
+          localStorage.setItem("students", JSON.stringify(list));
+          rerender();
+        }
+      }
+
+      function onDelete() {
+        var n = parseInt($($("#selStudents")).find("option:selected").val());
+        if (!isNaN(n)) {
+          delete list[n];
+          list = list.filter((x) => x != null);
+          localStorage.setItem("students", JSON.stringify(list));
+          rerender();
+        }
+      }
+
+      function onSave() {
+        console.log("save");
+
+        var n = parseInt($($("#selStudents")).find("option:selected").val());
+        if (!isNaN(n)) {
+          var student = list[n];
+          for (var propertyName in student) {
+            // get value of field from the relevant input
+            const val = $("#" + propertyName).val();
+            // make changes to the original list
+            list[n][propertyName] = val;
+          }
+          // save in local storage
+          localStorage.setItem("students", JSON.stringify(list));
+          rerender();
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="" style="width: 400px; margin: 30px auto">
+      <h1>ניהול רשימת הסטודנטים</h1>
+
+      <div style="float: left">
+        <select id="selStudents" multiple></select>
+      </div>
+      <div style="float: left; margin-left: 20px" id="selctedData">
+        Select a student
+      </div>
+
+      <div style="clear: both"></div>
+      <button onclick="onInit()">Init</button>
+      <button onclick="onSave()">Save</button>
+      <button onclick="onAdd()">Add student as new</button>
+      <button onclick="onDelete()">Delete Student</button>
+
+      <h1></h1>
+    </div>
+  </body>
+</html>
