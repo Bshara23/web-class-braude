@@ -1,0 +1,138 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <style>
+        form div {
+            margin-top: 20px;
+        }
+
+        form span {
+            color: red;
+            margin-left: 10px;
+        }
+
+        label {
+            width: 80px;
+            display: inline-block;
+            margin-left: 120px;
+        }
+
+        /*input:required:invalid, input:focus:invalid {
+          background-color:lightcyan;
+        }*/
+
+        input:required:invalid,
+        input:focus:invalid {
+            background-image: url(/img/invalid.png);
+            background-position: right top;
+            background-repeat: no-repeat;
+        }
+
+        input:required:valid {
+            background-image: url(/img/valid.png);
+            background-position: right top;
+            background-repeat: no-repeat;
+        }
+    </style>
+     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script>
+        function Show() {
+            var s = "Name:\t" + $("#name").val() + 
+                "\nMail:\t" +  $("#mail").val() + 
+                "\nUrl:\t" + $("#url").val() + 
+                "\nHebrew:\t" + $("#heb").val();
+
+            $("#result").text(s);
+        }
+
+        function SubmitData() {
+            var inpObject = {
+                Name: $("#name").val(),
+                Mail: $("#mail").val(),
+                Url: $("#url").val(),
+                Hebrew: $("#heb").val()
+            }
+            var res = $("#result").text() + "\n\n" + JSON.stringify(inpObject);
+            $("#result").text(res);
+            return false;
+        }
+
+        function ResetData() {
+            $("#result").text("");
+            $("span").empty();
+        }
+
+        function showError(o) {
+            var sp = $(o).next();
+            $(sp).text("Error value in " + $(o).attr("id"));
+        }
+
+        function clearError(o) {
+            var sp = $(o).next();
+            $(sp).text("");
+        }
+
+        // other example 
+        function check(input) {
+            if (input.validity.typeMismatch) {
+                input.setCustomValidity("The '" + input.value + "' is not a valid email. Enter something else!!");
+            } else {
+                input.setCustomValidity("");
+            }
+        }
+
+        // is Hebrew text
+        function is_heb(Field) {
+            // First choose the required validation
+            HebrewChars = new RegExp("^[\u0590-\u05FF]+$");
+            AlphaNumericChars = new RegExp("^[a-zA-Z0-9\-]+$");
+            EnglishChars = new RegExp("^[a-zA-Z\-]+$");
+            LegalChars = new RegExp("^[a-zA-Z\-\u0590-\u05FF ]+$"); //Note that this one allows space 
+
+            // Then use it
+            if (!LegalChars.test(Field)) {
+                return false;
+            } else
+                return true;
+        }
+    </script>
+</head>
+
+<body>
+    <div style="width:600px;margin:20px auto;padding-top:20px">
+        <form oninput="Show()" onsubmit="return SubmitData()" onreset="ResetData()">
+            <div>
+                <label>Name:</label><input type="text" id="name" required placeholder="Enter your name"
+                    pattern="[a-zA-Z]+"
+                    oninvalid="setCustomValidity('Please, enter the Alphabets only');showError(this)"
+                    onchange="try { setCustomValidity('');clearError(this)}catch(e){}"><span></span>
+            </div>
+            <div>
+                <!--<label>Mail:</label><input type="email" id="mail" placeholder="Enter your mail" required>-->
+                <label>Mail:</label><input type="text" id="mail" placeholder="Enter your mail" required
+                    pattern=".+@.+\..+" oninvalid="showError(this)"><span></span>
+            </div>
+            <div>
+                <label>URL:</label><input type="text" id="url" placeholder="Enter your site URL" required
+                    pattern="https?://.+" oninvalid="showError(this)"><span></span>
+            </div>
+            <div>
+                <label>Hebrew:</label><input type="text" id="heb" placeholder="Enter Hebrew text" required
+                    pattern="^[\u0590-\u05FF]+$" oninvalid="showError(this)"><span></span>
+            </div>
+            <div>
+                <label>&nbsp;</label>
+                <input type="submit" value="Send" />
+                <input type="reset" value="Reset" />
+            </div>
+            <div style="margin-top:20px;">
+                <textarea id="result" style="width:100%;height:180px"></textarea>
+            </div>
+
+        </form>
+    </div>
+</body>
+
+</html>
