@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <script>
+      $(document).ready(function () {
+        $(".carousel").carousel({
+          interval: false,
+        });
+        var images = [
+          {
+            name: "The Hateful Eight",
+            src: "./images/hatful8.jpg",
+          },
+          {
+            name: "Inception",
+            src: "./images/inception.jpeg",
+          },
+          {
+            name: "John Wick",
+            src: "./images/wick.jpg",
+          },
+        ];
+
+        console.log($("img"));
+        $("img").each((i, elem) => {
+          $(elem).attr("src", images[i % images.length].src);
+        });
+
+        $(".carousel-caption2 h1").each((i, elem) => {
+          $(elem).text(images[i].name);
+        });
+      });
+
+      function imgClick(idx) {
+        console.log(idx);
+        $(".carousel").carousel(idx);
+      }
+    </script>
+    <title>Lab 5</title>
+  </head>
+  <body>
+    <div
+      id="carouselExampleIndicators"
+      class="carousel slide"
+      data-ride="carousel"
+      style=" width: 100%; height: auto; margin-left: 25%;"
+      
+    >
+      <!-- <ol class="carousel-indicators">
+        <li
+          data-target="#carouselExampleIndicators"
+          data-slide-to="0"
+          class="active"
+        ></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+      </ol> -->
+      <div class="carousel-inner" style="width: 500px; height: 500px;">
+        <div class="carousel-item active">
+            <div class="carousel-caption2">
+                <h1 style="text-align: center;">Name</h1>
+              </div>
+            <img class="d-block w-100" alt="First slide" />
+          
+        </div>
+        <div class="carousel-item">
+            <div class="carousel-caption2">
+                <h1 style="text-align: center;">Name</h1>
+              </div>
+            <img class="d-block w-100" alt="Second slide" />
+          
+        </div>
+        <div class="carousel-item">
+          
+            <div class="carousel-caption2">
+                <h1 style="text-align: center;">Name</h1>
+              </div>
+            <img class="d-block w-100" alt="Third slide" />
+        
+        </div>
+      </div>
+      <img
+      onclick="imgClick(0)"
+      style="height: 50px; width: auto"
+      class=".img-thumbnail"
+      alt="Second slide"
+    />
+    <img
+      onclick="imgClick(1)"
+      style="height: 50px; width: auto"
+      class=".img-thumbnail"
+      alt="Second slide"
+    />
+    <img
+      onclick="imgClick(2)"
+      style="height: 50px; width: auto"
+      class=".img-thumbnail"
+      alt="Second slide"
+    />
+    </div>
+
+    
+  </body>
+</html>

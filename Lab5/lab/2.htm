@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Plugin Examples</title>
+    <link href="plugins/ckeditor/contents.css" rel="stylesheet" />
+    <link href="plugins/tooltipster.css" rel="stylesheet" />
+    <link href="plugins/tooltipster-shadow.css" rel="stylesheet" />
+    <script src="plugins/ckeditor/styles.js"></script>
+    <script src="inc/jquery-1.10.2.js"></script>
+    <script src="plugins/highstock_min.js"></script>
+    <script src="plugins/jquery.tooltipster.min.js"></script>
+    <script src="plugins/ckeditor/ckeditor.js"></script>
+    <script src="plugins/ckeditor/config.js"></script>
+    <script>
+        $(document).ready(function () {
+            // load chart
+            LoadChart();
+            // Replace the <textarea id="editor1"> with a CKEditor
+            // instance, using default configuration.
+            CKEDITOR.replace('editor1', {
+                language: 'he'
+            });
+            // tooltip init
+            $('#my-tooltip').tooltipster({
+                contentAsHTML: true,
+                theme: 'tooltipster-shadow',
+                position: 'bottom',
+                content: $('<span><img src="images/rt1.png"/>&nbsp;<strong>דוגמה של הטולטיפ</strong></span>')
+            });
+        })
+
+        function LoadChart() {
+            $('#container').highcharts({
+                chart: {
+                    type: 'bar'
+                },
+                credits: {
+                    enabled: false
+                },
+                title: {
+                    text: 'Fruit Consumption'
+                },
+                xAxis: {
+                    categories: ['Apples', 'Bananas', 'Oranges']
+                },
+                yAxis: {
+                    title: {
+                        text: 'Fruit eaten'
+                    }
+                },
+                series: [{
+                    name: 'Moti',
+                    data: [1, 8, 4],
+                    color: 'red'
+                }, {
+                    name: 'Esti',
+                    data: [5, 7, 3],
+                    color: 'green'
+                }]
+            });
+        }
+
+    </script>
+</head>
+<body>
+    
+    <div style="width:900px;margin:20px auto">
+        <div>
+            <div id="container" style="width:400px; height:300px;float:left"></div>
+            <div style="margin-left:20px;width:400px; height:300px;float:left">
+                <div id="my-tooltip" style="padding:10px;margin:10px;border:1px solid silver">
+                    click/hover me to show a tooltip
+                </div>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+        <textarea name="editor1" id="editor1" rows="10" cols="80"></textarea>
+    </div>
+</body>
+</html>
